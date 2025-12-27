@@ -1,4 +1,5 @@
-
+import timeit
+import matplotlib.pyplot as plt
 
 def find_coins_greedy(coins: list, amount: int) -> dict:
     """
@@ -27,8 +28,7 @@ def find_min_coins(coins: list, amount: int) -> dict:
     min_coins = [float('inf')] * (amount + 1)
     min_coins[0] = 0
 
-    # used_coins[i] буде зберігати номінал останньої монети, доданої для досягнення суми i
-    # Це потрібно для відновлення результату (які саме монети ми взяли)
+    # used_coins[i] буде зберігати номінал останньої монети, доданої для досягнення суми
     used_coins = [0] * (amount + 1)
 
     # Проходимо по всіх сумах від 1 до amount
@@ -40,10 +40,11 @@ def find_min_coins(coins: list, amount: int) -> dict:
                     min_coins[s] = min_coins[s - coin] + 1
                     used_coins[s] = coin
 
-    # Якщо для заданої суми рішення не знайдено (наприклад, неможливо скласти суму)
+    # Якщо для заданої суми рішення не знайдено ( неможливо скласти суму)
     if min_coins[amount] == float('inf'):
         return {}
-        # Відновлюємо результат, рухаючись назад від amount до 0
+    
+    # Відновлюємо результат, рухаючись назад від amount до 0
     result = {}
     current_sum = amount
     while current_sum > 0:
@@ -57,22 +58,42 @@ def find_min_coins(coins: list, amount: int) -> dict:
     return result
 
 
-
-def main():
+def compare_algorithms():
     coins_list = [50, 25, 10, 5, 2, 1]
+    
+    # Значення для тестування (більше 2500 динамічний алгоритм стає дуже повільним)
+    test_amounts = range(10, 1000, 100) 
+    
+    greedy_times = []
+    dp_times = []
 
-    target_amount = 113
+    print(f"{'Amount':<10} | {'Greedy Time (s)':<20} | {'DP Time (s)':<20}")
+    print("-" * 60)
 
-    print(f"Сума для видачі: {target_amount}")
+    for amount in test_amounts:
+        # тестуємо Жадібний алгоритм
+        # запускаємо його 10 разів і беремо середній час виконання: number=10 
+        t_greedy = timeit.timeit(lambda: find_coins_greedy(coins_list, amount), number=10)
+        
+        # Тестуємо Динамічний аллгоритм так само:
+        t_dp = timeit.timeit(lambda: find_min_coins(coins_list, amount), number=10)
+        
+        greedy_times.append(t_greedy)
+        dp_times.append(t_dp)
+        
+        print(f"{amount:<10} | {t_greedy:.6f}             | {t_dp:.6f}")
 
-        # Тест жадібного алгоритму
-    greedy_result = find_coins_greedy(coins_list, target_amount)
-    print("Greedy Algorithm:", greedy_result)
-
-        # Тест динамічного програмування
-    dp_result = find_min_coins(coins_list, target_amount)
-    print("Dynamic Programming:", dp_result)
-
+    # Графіки
+    plt.figure(figsize=(10, 6))
+    plt.plot(test_amounts, greedy_times, label='Жадібний Алгоритм', color='green', marker='o')
+    plt.plot(test_amounts, dp_times, label='Алгоритм Динамічного програмування', color='red', linestyle='--')
+    
+    plt.title('Тест швидкості: Жадібний vs Динамічне програмування')
+    plt.xlabel('Target Amount (Sum)')
+    plt.ylabel(f'Час виконання ,секунди (середня з 10 виконаннь)')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 if __name__ == "__main__":
-    main()
+    compare_algorithms()
