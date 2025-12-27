@@ -89,8 +89,8 @@ def compare_algorithms():
     plt.plot(test_amounts, dp_times, label='Алгоритм Динамічного програмування', color='red', linestyle='--')
     
     plt.title('Тест швидкості: Жадібний vs Динамічне програмування')
-    plt.xlabel('Target Amount (Sum)')
-    plt.ylabel(f'Час виконання ,секунди (середня з 10 виконаннь)')
+    plt.xlabel('Сума решти (Sum)')
+    plt.ylabel(f'Час виконання, секунди (середня з 10 виконаннь)')
     plt.legend()
     plt.grid(True)
     plt.show()
