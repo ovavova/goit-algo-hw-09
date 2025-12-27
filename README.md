@@ -4,7 +4,7 @@
 
 Графік по результатам:
 
-<img width="1000" height="600" alt="Image" src="https://github.com/user-attachments/assets/d81be9f9-15d9-4454-82b2-40d5c65f9476" />
+<img width="1000" height="600" alt="Image" src="https://github.com/user-attachments/assets/5a4b5668-915b-4c6a-b87d-e719d3558a75" />
 
 ## Висновки. 
 
@@ -21,5 +21,13 @@
 
 ## Алгоритм Динамічного програмування краще підходить для нестандартних номіналів:
 Як приклад [4, 3, 1] а треба видати 6, Жадібний видасть [4+1+1] тоді як ДП [3+3] що є правильним оптимумом
+
+
+PS
+
+до 1к:
+
+<img width="1000" height="600" alt="Image" src="https://github.com/user-attachments/assets/d81be9f9-15d9-4454-82b2-40d5c65f9476" />
+
 
 
